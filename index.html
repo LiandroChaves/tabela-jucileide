@@ -308,21 +308,103 @@
         }
 
         @media print {
+
+            /* 1. O TRUQUE MASTER: Remove a margem da impressora */
+            @page {
+                margin: 0;
+                size: A4;
+            }
+
+            /* 2. Configura o corpo pra ocupar a folha toda */
             body {
-                background: white;
-                padding: 0;
-            }
-
-            .menu-container {
-                box-shadow: none;
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
                 width: 100%;
-                max-width: 100%;
-                padding: 20px;
+                height: 100%;
             }
 
+            /* 3. Container com margem interna (padding) pro TEXTO não cortar */
+            .menu-container {
+                background: transparent !important;
+                box-shadow: none !important;
+                border: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                /* Aqui a gente dá espaço pro texto não colar na borda, já que tiramos a margem da página */
+                padding: 40px 50px !important;
+                margin: 0 !important;
+                box-sizing: border-box !important;
+            }
+
+            /* 4. As Folhas (SVGs) encostando nas bordas */
             .leaf-svg {
-                opacity: 0.1 !important;
-                -webkit-print-color-adjust: exact;
+                opacity: 0.15 !important;
+                z-index: -1 !important;
+                position: fixed !important;
+                /* Fixa na página */
+            }
+
+            .leaf-top-right {
+                top: -40px !important;
+                /* Negativo pra garantir que não sobra linha branca */
+                right: -5px !important;
+                width: 300px !important;
+                /* Tamanho fixo pra não distorcer */
+                height: 300px !important;
+            }
+
+            .leaf-bottom-left {
+                bottom: 0px !important;
+                left: -5px !important;
+                width: 350px !important;
+                height: 350px !important;
+            }
+
+            /* 5. Ajuste do Layout pra caber em 1 folha */
+            header,
+            footer {
+                display: block !important;
+                text-align: center !important;
+            }
+
+            /* Reduz um pouco as margens verticais pra economizar espaço */
+            header {
+                margin-bottom: 20px !important;
+            }
+
+            footer {
+                margin-top: 20px !important;
+                padding-top: 10px !important;
+            }
+
+            .menu-grid {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 40px !important;
+                margin-bottom: 0 !important;
+            }
+
+            /* Ajuste fino nas fontes e margens dos itens */
+            .menu-section {
+                margin-bottom: 20px !important;
+            }
+
+            .price-item {
+                margin-bottom: 5px !important;
+            }
+
+            h2 {
+                margin-bottom: 10px !important;
+                font-size: 1.3rem !important;
+            }
+
+            /* Se precisar encolher um pouco pra caber */
+            .menu-container {
+                zoom: 0.95;
+                /* Um leve zoom out de 5% pra garantir que nada pule pra pag 2 */
             }
         }
     </style>
