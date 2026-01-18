@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Preços - Organic Hair Concept</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* --- Variáveis de Cor --- */
+        :root {
+            --primary-green: #5D7A63;
+            --secondary-beige: #F4F1E8;
+            --accent-gold: #A89B85;
+            --text-dark: #2c2c2c;
+            --text-light: #555555;
+        }
+
+        /* --- Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #e8e4da;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* --- O Papel (Container) --- */
+        .menu-container {
+            background-color: var(--secondary-beige);
+            width: 100%;
+            max-width: 900px;
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        /* --- Elementos Decorativos (SVG) --- */
+        .leaf-svg {
+            position: absolute;
+            fill: var(--primary-green);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .leaf-top-right {
+            top: -40px;
+            right: 40px;
+            width: 280px;
+            height: 280px;
+            transform: rotate(135deg);
+        }
+
+        .leaf-bottom-left {
+            bottom: -60px;
+            left: -60px;
+            width: 350px;
+            height: 350px;
+            transform: rotate(-10deg);
+        }
+
+        /* --- Cabeçalho e Logo --- */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-green);
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            margin-bottom: 5px;
+            /* Espaço pro container de baixo */
+        }
+
+        /* Container flexível pra logo e subtítulo */
+        .logo-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            /* Centraliza verticalmente */
+            justify-content: center;
+            /* Centraliza na tela */
+            gap: 0px;
+            /* Espaço entre a logo e o texto */
+        }
+
+        .logo {
+            width: auto;
+            height: 50px;
+            /* Altura discreta pra ficar parelho com o texto */
+            display: block;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--accent-gold);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            /* Removemos a margem top porque o gap do container já resolve */
+            margin-top: 0;
+        }
+
+        /* --- Grid Layout --- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            position: relative;
+        }
+
+        .menu-section {
+            margin-bottom: 35px;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-green);
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .price-note {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
+
+        /* --- Lista de Preços --- */
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .service-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .dots {
+            flex-grow: 1;
+            border-bottom: 2px dotted #ccc;
+            margin: 0 8px 4px 8px;
+            opacity: 0.5;
+        }
+
+        .price {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--primary-green);
+            white-space: nowrap;
+        }
+
+        .adicional-note {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--primary-green);
+            margin-top: 10px;
+            text-align: right;
+            display: block;
+        }
+
+        /* --- Rodapé --- */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .organic-note {
+            font-weight: 600;
+            color: var(--primary-green);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: block;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .contacts,
+        .address {
+            margin-bottom: 6px;
+        }
+
+        .footer-logos {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .footer-logos span {
+            border: 1px solid var(--primary-green);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* --- RESPONSIVIDADE --- */
+
+        @media (max-width: 768px) {
+            .menu-container {
+                padding: 30px;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .leaf-top-right {
+                width: 200px;
+                height: 200px;
+            }
+
+            .leaf-bottom-left {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .menu-container {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            /* Ajuste fino pra logo no mobile */
+            .logo {
+                height: 44px;
+                /* Um pouco menor no celular */
+            }
+
+            .subtitle {
+                font-size: 0.95rem;
+                /* Ajuste no texto também */
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .price-item {
+                font-size: 0.85rem;
+            }
+
+            .leaf-top-right {
+                width: 160px;
+                height: 160px;
+                opacity: 0.1;
+            }
+
+            .leaf-bottom-left {
+                width: 160px;
+                height: 160px;
+                opacity: 0.1;
+            }
+
+            .service-name {
+                max-width: 65%;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .menu-container {
+                box-shadow: none;
+                width: 100%;
+                max-width: 100%;
+                padding: 20px;
+            }
+
+            .leaf-svg {
+                opacity: 0.1 !important;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="menu-container">
+
+        <svg class="leaf-svg leaf-top-right" height="800px" width="800px" version="1.1" id="_x32_"
+            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
+            xml:space="preserve">
+            <g>
+                <path class="st0" d="M255.73,217.366l29.491,95.203l24.925-7.72l-19.684,24.638l35.545,114.717
+        c30.691-35.24,42.986-85.1,28.138-133.014C339.299,263.25,300.981,229.092,255.73,217.366z" />
+                <path class="st0" d="M416.29,181.136c-49.968-23.049-106.854-17.84-157.415,9.114l150.161,69.272l16.165-35.359l3.399,44.388
+        l83.4,38.479C499.403,250.924,466.258,204.185,416.29,181.136z" />
+                <path class="st0"
+                    d="M318.973,101.414l41.988,22.448l35.832-18.804L378.48,70.172l41.97,22.457l74.421-39.07
+        C449.434,21.48,388.067,15.41,335.444,43.032c-52.624,27.631-82.487,81.608-81.879,137.224l83.721-43.966L318.973,101.414z" />
+                <path class="st0" d="M145.138,54.379l-24.368,25.72l111.268,105.45c13.24-48.853-1.217-104.571-42.106-143.312
+        C149.045,3.488,92.616-7.951,44.558,7.894l57.815,54.788L145.138,54.379z" />
+                <path class="st0" d="M92.143,150.343C44.406,163.956,10.383,202.256,0,247.44l53.892-15.371l8.608-26.05l6.206,21.839
+        l48.227-13.748l10.028-30.395l7.254,25.475l87.424-24.909C188.986,151.366,139.896,136.747,92.143,150.343z" />
+                <path class="st0" d="M255.814,199.551l-18.533-9.266c-94.544,116.797-81.574,320.722-81.574,320.722h77.87
+        C205.76,362.699,242.844,227.359,255.814,199.551z" />
+            </g>
+        </svg>
+        <svg class="leaf-svg leaf-bottom-left" version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 64 64"
+            enable-background="new 0 0 64 64" xml:space="preserve">
+            <g>
+                <path
+                    d="M34.929,7.629c-0.205-0.513-0.787-0.763-1.297-0.557c-0.513,0.203-0.764,0.784-0.562,1.297
+        c0.019,0.047,1.84,4.804-0.032,11.356c0,0-0.001,0.007-0.001,0.011c-1.215,1.103-2.459,2.271-3.744,3.557
+        c-1.357,1.357-2.591,2.671-3.745,3.948c0.998-9.183-0.498-16.128-0.571-16.458c-0.12-0.539-0.654-0.876-1.193-0.76
+        c-0.539,0.12-0.879,0.654-0.76,1.193c0.019,0.086,1.823,8.469,0.13,18.763c-2.26,2.695-4.05,5.14-5.464,7.261
+        c0.709-7.9-0.644-14.145-0.713-14.457c-0.12-0.539-0.65-0.886-1.193-0.759c-0.539,0.119-0.879,0.653-0.76,1.192
+        c0.02,0.087,1.885,8.75,0.048,18.297c-1.383,2.488-1.953,3.988-2.01,4.141c-0.19,0.518,0.074,1.092,0.592,1.283
+        C13.768,46.979,13.885,47,14,47c0.406,0,0.788-0.25,0.938-0.653c0.013-0.034,0.5-1.302,1.684-3.468
+        c10.438-2.726,19.995,0.051,20.092,0.079C36.809,42.986,36.905,43,37,43c0.431,0,0.828-0.28,0.958-0.714
+        c0.158-0.528-0.142-1.085-0.671-1.244C36.897,40.924,28.2,38.391,18,40.506c1.416-2.316,3.406-5.218,6.108-8.52
+        c0.052-0.006,0.104-0.008,0.154-0.021c10.595-2.889,21.367-0.029,21.475,0C45.825,31.988,45.913,32,46,32
+        c0.44,0,0.844-0.292,0.965-0.737c0.145-0.533-0.169-1.082-0.702-1.228c-0.425-0.116-9.801-2.598-20.012-0.576
+        c1.341-1.524,2.814-3.109,4.456-4.752c1.41-1.41,2.777-2.693,4.103-3.88c6.452-1.649,12.852,0.116,12.916,0.135
+        C47.817,20.987,47.909,21,48,21c0.436,0,0.836-0.287,0.961-0.727c0.151-0.53-0.155-1.083-0.687-1.235
+        c-0.239-0.067-4.9-1.367-10.473-0.779c8.531-7.021,14.472-9.294,14.545-9.321c0.518-0.191,0.782-0.767,0.591-1.284
+        c-0.191-0.519-0.766-0.779-1.283-0.592c-0.326,0.12-6.805,2.58-16.068,10.431C36.527,11.735,35.004,7.816,34.929,7.629z" />
+                <path d="M60.893,1.549c-0.136-0.269-0.386-0.462-0.679-0.525c-2.98-0.652-6.97-0.982-11.856-0.982
+        c-4.922,0-10.564,0.353-15.481,0.967C17.641,2.912,7,13.601,7,27v18.678L3.103,60.225c-0.428,1.598,0.523,3.244,2.122,3.674
+        c1.598,0.426,3.245-0.525,3.673-2.121L11.25,53H31c14.337,0,26-11.663,26-26c0-6.663,0-15.788,3.914-24.594
+        C61.036,2.132,61.028,1.816,60.893,1.549z M6.966,61.26c-0.143,0.532-0.691,0.849-1.224,0.707
+        c-0.534-0.145-0.851-0.691-0.708-1.225l2.552-9.686c0.405,0.672,0.998,1.212,1.712,1.55L6.966,61.26z M55,27
+        c0,13.233-10.767,24-24,24H11c-1.104,0-2-0.896-2-2v-1V27C9,14.641,18.92,4.769,33.124,2.992
+        c4.839-0.604,10.391-0.951,15.233-0.951c4.048,0,7.553,0.242,10.238,0.705C55,11.565,55,20.443,55,27z" />
+            </g>
+        </svg>
+
+        <header>
+            <h1>Organic Hair Concept</h1>
+            <div class="logo-container">
+                <img src="./logo.png" alt="logo" class="logo">
+                <div class="subtitle">Cabeleireiro</div>
+            </div>
+        </header>
+
+        <div class="menu-grid">
+            <div class="left-column">
+
+                <section class="menu-section">
+                    <h2>Corte (Cut)</h2>
+                    <div class="price-list">
+                        <div class="price-item"><span class="service-name">Corte Masculino</span><span
+                                class="dots"></span><span class="price">13€ a 15€</span></div>
+                        <div class="price-item"><span class="service-name">Corte Máquina</span><span
+                                class="dots"></span><span class="price">12,00€</span></div>
+                        <div class="price-item"><span class="service-name">Corte Feminino</span><span
+                                class="dots"></span><span class="price">25,00€</span></div>
+                        <div class="price-item"><span class="service-name">Corte Franja (c/ lavar)</span><span
+                                class="dots"></span><span class="price">10,00€</span></div>
+                        <div class="price-item"><span class="service-name">Corte Franja (s/ lavar)</span><span
+                                class="dots"></span><span class="price">5,00€</span></div>
+                        <div class="price-item"><span class="service-name">Corte Infantil (s/ lavar)</span><span
+                                class="dots"></span><span class="price">12,00€</span></div>
+                    </div>
+                </section>
+
+                <section class="menu-section">
+                    <h2>Escova (Brushing)</h2>
+                    <div class="price-list">
+                        <div class="price-item"><span class="service-name">Cabelo Curto</span><span
+                                class="dots"></span><span class="price">15€ a 17€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Médio</span><span
+                                class="dots"></span><span class="price">20,00€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Longo</span><span
+                                class="dots"></span><span class="price">25,00€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Extra Longo</span><span
+                                class="dots"></span><span class="price">30,00€</span></div>
+                        <div class="price-item"><span class="service-name">Mega Hair</span><span
+                                class="dots"></span><span class="price">50,00€</span></div>
+                        <span class="adicional-note">+ Cabelo com Prancha ou Babyliss: +10,00€</span>
+                    </div>
+                </section>
+
+                <section class="menu-section">
+                    <h2>Tratamento (Treatment)</h2>
+                    <div class="price-list">
+                        <div class="price-item"><span class="service-name">Ampola</span><span class="dots"></span><span
+                                class="price">15,00€</span></div>
+                        <div class="price-item"><span class="service-name">Hidratação</span><span
+                                class="dots"></span><span class="price">30,00€</span></div>
+                        <div class="price-item"><span class="service-name">Nutrição</span><span
+                                class="dots"></span><span class="price">35,00€</span></div>
+                        <div class="price-item"><span class="service-name">Reconstrução</span><span
+                                class="dots"></span><span class="price">35,00€</span></div>
+                        <div class="price-item"><span class="service-name">Aplicação</span><span
+                                class="dots"></span><span class="price">15,00€</span></div>
+                        <div class="price-item"><span class="service-name">Lavagem + Secagem</span><span
+                                class="dots"></span><span class="price">15,00€</span></div>
+                        <div class="price-item"><span class="service-name">Tratamento Couro Cabeludo</span><span
+                                class="dots"></span><span class="price">Sob Consulta</span></div>
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="right-column">
+
+                <section class="menu-section">
+                    <h2>Alisamento Orgânico</h2>
+                    <span class="price-note">(Organic Smoothing)</span>
+                    <div class="price-list">
+                        <div class="price-item"><span class="service-name">Cabelo Curto</span><span
+                                class="dots"></span><span class="price">100,00€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Médio</span><span
+                                class="dots"></span><span class="price">120,00€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Longo</span><span
+                                class="dots"></span><span class="price">130,00€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Extra Longo</span><span
+                                class="dots"></span><span class="price">150,00€</span></div>
+                        <div class="price-item"><span class="service-name">Permanente</span><span
+                                class="dots"></span><span class="price">80€ a 120€</span></div>
+                    </div>
+                </section>
+
+                <section class="menu-section">
+                    <h2>Coloração (Colouring)</h2>
+                    <div class="price-list">
+                        <div class="price-item"><span class="service-name">Cabelo Curto</span><span
+                                class="dots"></span><span class="price">40,00€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Médio</span><span
+                                class="dots"></span><span class="price">45,00€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Longo / Total</span><span
+                                class="dots"></span><span class="price">60,00€</span></div>
+                        <div class="price-item"><span class="service-name">Retoque (1 cm)</span><span
+                                class="dots"></span><span class="price">40,00€</span></div>
+                        <div class="price-item"><span class="service-name">Aplicação</span><span
+                                class="dots"></span><span class="price">15€ a 20€</span></div>
+                        <div class="price-item"><span class="service-name">Camuflagem Branco</span><span
+                                class="dots"></span><span class="price">A partir de 40€</span></div>
+                    </div>
+                </section>
+
+                <section class="menu-section">
+                    <h2>Mechas (Locks)</h2>
+                    <div class="price-list">
+                        <div class="price-item"><span class="service-name">Cabelo Curto</span><span
+                                class="dots"></span><span class="price">120,00€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Médio</span><span
+                                class="dots"></span><span class="price">130,00€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Longo</span><span
+                                class="dots"></span><span class="price">150,00€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Extra Longo</span><span
+                                class="dots"></span><span class="price">200,00€</span></div>
+                    </div>
+                </section>
+
+                <section class="menu-section">
+                    <h2>Tonalizante / Matizar</h2>
+                    <div class="price-list">
+                        <div class="price-item"><span class="service-name">Cabelo Médio</span><span
+                                class="dots"></span><span class="price">30,00€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Longo Total</span><span
+                                class="dots"></span><span class="price">40,00€</span></div>
+                        <div class="price-item"><span class="service-name">Cabelo Extra Longo</span><span
+                                class="dots"></span><span class="price">50,00€</span></div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <footer>
+            <span class="organic-note">Todos os serviços incluem produtos Orgânicos.</span>
+            <div class="contacts">964 277 807 / 211 321 993</div>
+            <div class="address">Rua Guilhermina Suggia, nº 14C, 1700-197, Lisboa, Portugal</div>
+
+            <div class="footer-logos">
+                <span>🌿 ECO FRIENDLY</span>
+                <span>🐰 CRUELTY FREE</span>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
